@@ -1,0 +1,12 @@
+dd1437be29e039dab737d9d7f22d599b *DESCRIPTION
+3d817094c02c5d3554aa1969c26a17a1 *NAMESPACE
+10fa0f0258a96044d75fd82bf3394bf3 *R/gesis.R
+0cf46f2ce35248fe35812c5795247ba7 *build/vignette.rds
+d1a6ecdf42c073e904c6cee7034320b6 *inst/doc/gesis.R
+ec4724397c89d0933828dc4b01077a38 *inst/doc/gesis.Rmd
+7d64e71bb8bcd43bc31e91bccc8b9120 *inst/doc/gesis.html
+fb34d05923fe6be352468157f6ce0abb *man/browse_codebook.Rd
+c505d94be1f0f9efae47cc8ef216b015 *man/download_dataset.Rd
+80e303023e0408543d06fa21ef71e569 *man/login_gesis.Rd
+25294751f92e7e7837bf09755c1c493c *man/setup_gesis.Rd
+ec4724397c89d0933828dc4b01077a38 *vignettes/gesis.Rmd
