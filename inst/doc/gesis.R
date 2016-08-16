@@ -1,40 +1,37 @@
-## ----setup, eval=FALSE---------------------------------------------------
-#  if(!dir.exists("downloads")) dir.create("downloads")
-#  gesis_remDr <- setup_gesis(download_dir = "downloads")
+## ----load----------------------------------------------------------------
+library(gesis)
+
+## ----groups--------------------------------------------------------------
+groups <- get_study_groups()
+head(groups, 10)
+
+## ----eurobar_waves-------------------------------------------------------
+eurobars <- get_datasets("0008")
+head(eurobars)
+
+## ----login, eval=FALSE---------------------------------------------------
+#  # username and password stored as environment
+#  # variables "GESIS_USER" and "GESIS_PASS"
+#  gesis_session <- login()
+
+## ----create_dir----------------------------------------------------------
+if(!dir.exists("downloads")) dir.create("downloads")
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  login_gesis(gesis_remDr, user = "myusername", pass = "mypassword")
+#  download_dataset(s = gesis_session, doi = eurobars$doi[1:3],
+#                   path = "downloads", filetype = ".dta")
 
-## ---- eval=FALSE---------------------------------------------------------
-#  download_dataset(gesis_remDr, doi = 5928, filetype = "dta", purpose = 1)
+## ----list_files----------------------------------------------------------
+files <- list.files("downloads", full.names = TRUE)
 
-## ---- eval=FALSE---------------------------------------------------------
-#  dir("downloads")
-#  gesis_remDr$Close()
-#  gesis_remDr$closeServer()
+## ----codebooks-----------------------------------------------------------
+download_codebook(eurobars$doi[1:3], path = "downloads")
 
-## ---- eval=FALSE---------------------------------------------------------
-#  browse_codebook(doi = 5928)
+## ----read_data, eval=FALSE-----------------------------------------------
+#  # library(haven)
+#  df <- read_dta(files[1])
+#  dim(df)
 
-## ------------------------------------------------------------------------
-library(xml2)
-
-# Browsing the gesis website, we find the url for the main page for these studies
-url <- "https://dbk.gesis.org/dbksearch/GDesc2.asp?no=0074&ll=10&db=d&notabs=1"
-
-page <- read_html(url)
-doi_links <- xml_find_all(page, "//a[contains(text(), 'ZA')]")
-doi <- substr(xml_text(doi_links), 3, 7)
-str(doi)
-
-## ---- eval = FALSE-------------------------------------------------------
-#  # Setup preliminaries
-#  if(!dir.exists("downloads")) dir.create("downloads")
-#  gesis_remDr <- setup_gesis(download_dir = "downloads")
-#  
-#  # Log in
-#  login_gesis(gesis_remDr, user = "myusername", pass = "mypassword")
-#  
-#  # Loop over DOIs to download
-#  lapply(doi, download_dataset, remDr = gesis_remDr)
+## ----remove_downloads, echo=FALSE----------------------------------------
+unlink("downloads", recursive = TRUE)
 
