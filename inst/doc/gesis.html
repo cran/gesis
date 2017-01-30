@@ -12,7 +12,7 @@
 
 <meta name="author" content="Eric Persson" />
 
-<meta name="date" content="2016-08-16" />
+<meta name="date" content="2017-01-30" />
 
 <title>Programmatic access to the GESIS Data Catalogue (DBK)</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Programmatic access to the GESIS Data Catalogue (DBK)</h1>
 <h4 class="author"><em>Eric Persson</em></h4>
-<h4 class="date"><em>2016-08-16</em></h4>
+<h4 class="date"><em>2017-01-30</em></h4>
 
 
 
@@ -79,27 +79,31 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>We start by listing all available groups of studies:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">groups &lt;-<span class="st"> </span><span class="kw">get_study_groups</span>()
 <span class="kw">head</span>(groups, <span class="dv">10</span>)</code></pre></div>
-<pre><code>##    group_no                                        value
-## 1      0001 International Social Survey Programme (ISSP)
-## 2      0002                     EB - Flash Eurobarometer
-## 3      0003                               Travel Surveys
-## 4      0004                            Time Budget Study
-## 5      0005       EB - Central and Eastern Eurobarometer
-## 6      0006       EB - Candidate Countries Eurobarometer
-## 7      0007                                       ALLBUS
-## 8      0008      EB - Standard and Special Eurobarometer
-## 9      0009                  European Values Study (EVS)
-## 10     0010                               Politbarometer</code></pre>
-<p>We see that the Eurobarometer has study group number 10. Let’s looks at all available Eurobarometer waves:</p>
+<pre><code>## # A tibble: 10 × 2
+##    Groupnumber                                `Group Title`
+##          &lt;chr&gt;                                        &lt;chr&gt;
+## 1       GN0001 International Social Survey Programme (ISSP)
+## 2       GN0002                     EB - Flash Eurobarometer
+## 3       GN0003                               Travel Surveys
+## 4       GN0004                            Time Budget Study
+## 5       GN0005       EB - Central and Eastern Eurobarometer
+## 6       GN0006       EB - Candidate Countries Eurobarometer
+## 7       GN0007                                       ALLBUS
+## 8       GN0008      EB - Standard and Special Eurobarometer
+## 9       GN0009                  European Values Study (EVS)
+## 10      GN0010                               Politbarometer</code></pre>
+<p>We see that the Eurobarometer has study group number 0008. Let’s looks at all available Eurobarometer waves:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eurobars &lt;-<span class="st"> </span><span class="kw">get_datasets</span>(<span class="st">&quot;0008&quot;</span>)
 <span class="kw">head</span>(eurobars)</code></pre></div>
-<pre><code>##    doi                           title
-## 1 0078 Attitudes towards Europe (1962)
-## 2 0626 European Communities Study 1970
-## 3 0627 European Communities Study 1971
-## 4 0628 European Communities Study 1973
-## 5 0986  Eurobarometer 2 (Oct-Nov 1974)
-## 6 0987      Eurobarometer 3 (May 1975)</code></pre>
+<pre><code>## # A tibble: 6 × 2
+##     doi                           title
+##   &lt;chr&gt;                           &lt;chr&gt;
+## 1  0078 Attitudes towards Europe (1962)
+## 2  0626 European Communities Study 1970
+## 3  0627 European Communities Study 1971
+## 4  0628 European Communities Study 1973
+## 5  0986  Eurobarometer 2 (Oct-Nov 1974)
+## 6  0987      Eurobarometer 3 (May 1975)</code></pre>
 <p>We would now like to download the first three studies. We first need to log in to the Gesis website and then pass the DOIs (unique data set identifiers) to <code>download_dataset</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># username and password stored as environment </span>
 <span class="co"># variables &quot;GESIS_USER&quot; and &quot;GESIS_PASS&quot;</span>
