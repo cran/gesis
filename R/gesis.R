@@ -4,7 +4,7 @@
 #' @param password Your Gesis password
 #'
 #' @details
-#' The username and password can also be stored as enviroenment variables
+#' The username and password can also be stored as environment variables
 #' "GESIS_USER" and "GESIS_PASS" so as not to store these in plaintext in a
 #' script.
 #'
@@ -107,8 +107,10 @@ download_codebook <- function(doi, path = ".", quiet = FALSE) {
     for(d in doi) {
 
         url <- paste0("https://dbk.gesis.org/dbksearch/SDesc2.asp?db=E&no=", d)
+        nodename <- paste0("ZA", d, "_cdb.pdf")
         page <- read_html(url)
         node <- html_nodes(page, xpath = "//a[contains(text(), '_cdb')]")
+        node <- subset(node, html_text(node) == nodename)
         node <- paste0("https://dbk.gesis.org/dbksearch/", html_attr(node, "href"))
         resp <- GET(node)
 
@@ -128,11 +130,17 @@ download_codebook <- function(doi, path = ".", quiet = FALSE) {
 #' @import xml2
 #'
 #' @examples
+#' \dontrun{
 #' groups <- get_study_groups()
 #' head(groups)
+#' }
+
 get_study_groups <- function() {
     url <- "https://dbk.gesis.org/dbksearch/gdesc.asp?db=e"
-    page <- read_html(url)
+    page <- httr::GET(url)
+
+    httr::stop_for_status(page)
+    page <- httr::content(page)
 
     node <- html_nodes(page, xpath = "//*[@id='ppagingtab']/div[1]/table")
     df <- html_table(node)[[1]]
